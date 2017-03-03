@@ -2,6 +2,8 @@
  * Created by nickburrell on 03/03/2017.
  */
 import uk.me.jstott.jcoord.*;
+import com.opencsv.*;
+
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -13,39 +15,69 @@ public class TrafficDataProcess
 {
     static HashMap<String, HashMap<String, RoadData>> hashMap = new HashMap<String, HashMap<String, RoadData>>();
 
+    public static void main(String args[])
+    {
+        run();
+    }
+
     public static void run()
     {
+        read();
 
+        System.out.println("Done");
+        for(String objname:hashMap.keySet())
+        {
+            System.out.println(objname);
+
+            HashMap<String, RoadData> subMap = hashMap.get(objname);
+
+            /*for(String subname:subMap.keySet())
+            {
+                System.out.println(subname);
+                System.out.println(subMap.get(subname).count);
+                System.out.println(subMap.get(subname).roadName);
+            }*/
+        }
     }
 
     public static void read()
     {
-        String csvFile = "/Users/nickburrell/Downloads/Raw-count-data-major-roads.csv";
-        BufferedReader br = null;
-        String line = "";
-        String cvsSplitBy = ",";
-
+        CSVReader reader = null;
         try {
 
-            br = new BufferedReader(new FileReader(csvFile));
+            String csvFile = "/Users/nickburrell/Downloads/Raw-count-data-major-roads.csv";
+            reader = new CSVReader(new FileReader(csvFile));
+            String [] nextLine;
 
-            while ((line = br.readLine()) != null) {
+            // bool to skip first line
+            boolean skipLine = true;
 
-                // use comma as separator
-                String[] data = line.split(cvsSplitBy);
+            while ((nextLine = reader.readNext()) != null)
+            {
+                if (skipLine)
+                {
+                    skipLine = false;
+                    continue;
+                }
+
+                int[] indexes = new int []{4, 5, 6, 8, 9, 11, 12, 17, 26};
+
+                // if any of the accessed data is empty/null, skip
+                if (isEmpty(indexes, nextLine))
+                    continue;
 
                 // add to hashMap by road
-                LatLng cpLocation = new OSRef(Double.parseDouble(data[4]), Double.parseDouble(data[5])).toLatLng();
+                LatLng cpLocation = new OSRef(Double.parseDouble(nextLine[4]), Double.parseDouble(nextLine[5])).toLatLng();
 
-                String roadName = data[6];
+                String roadName = nextLine[6];
 
-                LatLng jBefore = new OSRef(Double.parseDouble(data[8]), Double.parseDouble(data[9])).toLatLng();
+                LatLng jBefore = new OSRef(Double.parseDouble(nextLine[8]), Double.parseDouble(nextLine[9])).toLatLng();
 
-                LatLng jAfter = new OSRef(Double.parseDouble(data[11]), Double.parseDouble(data[12])).toLatLng();
+                LatLng jAfter = new OSRef(Double.parseDouble(nextLine[11]), Double.parseDouble(nextLine[12])).toLatLng();
 
-                int hour = Integer.parseInt(data[17]);
+                int hour = Integer.parseInt(nextLine[17]);
 
-                int count = Integer.parseInt(data[26]);
+                int count = Integer.parseInt(nextLine[26]);
 
                 // Temp string
                 String beforeAfter = jBefore.toString() + jAfter.toString();
@@ -85,14 +117,32 @@ public class TrafficDataProcess
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
+        }
+        finally
+        {
+            if (reader != null)
+            {
+                try
+                {
+                    reader.close();
+                }
+                catch (IOException e)
+                {
                     e.printStackTrace();
                 }
             }
         }
+    }
+
+    // Method to check wheter any of the indexes of a string array are empty
+    private static boolean isEmpty(int[] indexes, String[] array)
+    {
+        for (int i : indexes)
+        {
+            if (array[i].isEmpty() || array[i] == null)
+                return true;
+        }
+
+        return false;
     }
 }
