@@ -8,7 +8,7 @@ public class RoadData
 {
     int total = 0;
     int count = 0;
-    double average = 0;
+    float average = 0;
 
     LatLng cpLocation;
 
@@ -18,7 +18,7 @@ public class RoadData
 
     LatLng jAfter;
 
-    public RoadData(String _roadName, LatLng _cpLocation, LatLng _jBefore, LatLng _jAfter)
+    public RoadData(String _roadName, LatLng _cpLocation, LatLng _jBefore, LatLng _jAfter, int _total)
     {
         cpLocation = _cpLocation;
 
@@ -26,6 +26,10 @@ public class RoadData
         jAfter = _jAfter;
 
         roadName = _roadName;
+
+        total = _total;
+        average = this.total;
+        count = 1;
     }
 
     // Function that takes in the value to be added, most likely the total vehicle count, then adds to the attr's IF
@@ -35,10 +39,10 @@ public class RoadData
         if (timeOfDay < 8 || timeOfDay > 20)
             return;
 
-        total += value;
+        this.total += value;
 
-        count ++;
+        this.count ++;
 
-        average = total / count;
+        this.average = (float)this.total / (float)this.count;
     }
 }

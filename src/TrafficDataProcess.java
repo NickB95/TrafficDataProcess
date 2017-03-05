@@ -17,6 +17,9 @@ public class TrafficDataProcess
 
     static JSONObject masterObj;
 
+    // Test var
+    static int zeroCount = 0;
+
     public static void main(String args[])
     {
         run();
@@ -44,6 +47,8 @@ public class TrafficDataProcess
         System.out.println("Writing to file...");
         writeToFile();
         System.out.println("Writing done");
+
+        System.out.println(zeroCount);
     }
 
     private static void print()
@@ -141,6 +146,7 @@ public class TrafficDataProcess
             // bool to skip first line
             boolean skipLine = true;
 
+
             while ((nextLine = reader.readNext()) != null)
             {
                 if (skipLine)
@@ -149,7 +155,7 @@ public class TrafficDataProcess
                     continue;
                 }
 
-                int[] indexes = new int []{4, 5, 6, 8, 9, 11, 12, 17, 26};
+                int[] indexes = new int []{4, 5, 6, 8, 9, 11, 12, 17, 30};
 
                 // if any of the accessed data is empty/null, skip
                 if (isEmpty(indexes, nextLine))
@@ -166,12 +172,15 @@ public class TrafficDataProcess
 
                 int hour = Integer.parseInt(nextLine[17]);
 
-                int count = Integer.parseInt(nextLine[26]);
+                int count = Integer.parseInt(nextLine[30]);
 
                 // Temp string
                 String beforeAfter = jBefore.toString() + jAfter.toString();
 
                 HashMap<String, RoadData> dataMap = hashMap.get(roadName);
+
+                if (count == 0)
+                    zeroCount++;
 
                 if (dataMap != null)
                 {
@@ -183,14 +192,14 @@ public class TrafficDataProcess
                     }
                     else
                     {
-                        RoadData dataToAdd = new RoadData(roadName, cpLocation, jBefore, jAfter);
+                        RoadData dataToAdd = new RoadData(roadName, cpLocation, jBefore, jAfter, count);
 
                         dataMap.put(beforeAfter, dataToAdd);
                     }
                 }
                 else
                 {
-                    RoadData dataToAdd = new RoadData(roadName, cpLocation, jBefore, jAfter);
+                    RoadData dataToAdd = new RoadData(roadName, cpLocation, jBefore, jAfter, count);
 
                     HashMap<String, RoadData> dataMapToAdd = new HashMap<String, RoadData>();
 
