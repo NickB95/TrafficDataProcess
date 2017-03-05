@@ -78,9 +78,6 @@ public class TrafficDataProcess
 
             JSONObject objToAdd = new JSONObject();
 
-            // Set RoadName
-            objToAdd.put("roadname", next.getKey());
-
             // Get sub hashMap Iterator
             Iterator <HashMap.Entry<String, RoadData>> subIterator = next.getValue().entrySet().iterator();
 
