@@ -27,5 +27,25 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="JSONSimple" level="project" />
+    <orderEntry type="module-library">
+      <library name="JSONSimple">
+        <CLASSES />
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/Downloads/json-simple-master/src/main/java" />
+          <root url="file://$USER_HOME$/Downloads/json-simple-master/src/test/java" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/json-simple-1.1.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

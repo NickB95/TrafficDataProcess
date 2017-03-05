@@ -4,16 +4,18 @@
 import uk.me.jstott.jcoord.*;
 import com.opencsv.*;
 
-
-import java.io.BufferedReader;
+import org.json.simple.JSONObject;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import java.io.*;
 
 public class TrafficDataProcess
 {
     static HashMap<String, HashMap<String, RoadData>> hashMap = new HashMap<String, HashMap<String, RoadData>>();
+
+    static JSONObject masterObj;
 
     public static void main(String args[])
     {
@@ -22,21 +24,111 @@ public class TrafficDataProcess
 
     public static void run()
     {
-        read();
+        // Timing
+        long tStart = System.currentTimeMillis();
 
-        System.out.println("Done");
+
+
+        System.out.println("Reading data...");
+        read();
+        long tEnd = System.currentTimeMillis();
+        long tDelta = tEnd - tStart;
+        double elapsedSeconds = tDelta / 1000.0;
+        System.out.println(elapsedSeconds);
+
+
+        System.out.println("Generating JSON...");
+        generateJSON();
+
+        //Write to file
+        System.out.println("Writing to file...");
+        writeToFile();
+        System.out.println("Writing done");
+    }
+
+    private static void print()
+    {
         for(String objname:hashMap.keySet())
         {
             System.out.println(objname);
 
             HashMap<String, RoadData> subMap = hashMap.get(objname);
 
-            /*for(String subname:subMap.keySet())
+            for(String subname:subMap.keySet())
             {
                 System.out.println(subname);
                 System.out.println(subMap.get(subname).count);
                 System.out.println(subMap.get(subname).roadName);
-            }*/
+            }
+        }
+    }
+
+    private static void generateJSON()
+    {
+        // Foreach entry in the primary HashMap
+
+        Iterator <HashMap.Entry<String, HashMap<String, RoadData>>> iterator = hashMap.entrySet().iterator();
+
+        masterObj = new JSONObject();
+
+        while(iterator.hasNext())
+        {
+            // Get next
+            HashMap.Entry<String, HashMap<String, RoadData>> next = iterator.next();
+
+            JSONObject objToAdd = new JSONObject();
+
+            // Set RoadName
+            objToAdd.put("roadname", next.getKey());
+
+            // Get sub hashMap Iterator
+            Iterator <HashMap.Entry<String, RoadData>> subIterator = next.getValue().entrySet().iterator();
+
+            while(subIterator.hasNext())
+            {
+                // Get next
+                HashMap.Entry<String, RoadData> subNext = subIterator.next();
+
+                JSONObject subObjToAdd = new JSONObject();
+
+                subObjToAdd.put("total", subNext.getValue().total);
+                subObjToAdd.put("count", subNext.getValue().count);
+                subObjToAdd.put("average", subNext.getValue().average);
+                subObjToAdd.put("cpLocation", subNext.getValue().cpLocation.toString());
+                subObjToAdd.put("roadName", subNext.getValue().roadName);
+                subObjToAdd.put("jBefore", subNext.getValue().jBefore.toString());
+                subObjToAdd.put("jAfter", subNext.getValue().jAfter.toString());
+
+
+                objToAdd.put(subNext.getKey(), subObjToAdd);
+            }
+
+            masterObj.put(next.getKey(), objToAdd);
+        }
+    }
+
+    private static void writeToFile()
+    {
+        Writer writerr = null;
+
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream("/Users/nickburrell/IdeaProjects/TrafficDataProcess/output/output.JSON"), "utf-8")))
+        {
+            writer.write(masterObj.toJSONString());
+
+            writer.close();
+        }
+        catch (FileNotFoundException fnf)
+        {
+            System.out.println("File not found");
+        }
+        catch (UnsupportedEncodingException uee)
+        {
+            System.out.println("Unsupported Encoding");
+        }
+        catch(IOException ioe)
+        {
+            System.out.println("IOExc");
         }
     }
 
