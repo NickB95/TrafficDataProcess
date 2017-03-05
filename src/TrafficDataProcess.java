@@ -1,6 +1,7 @@
 /**
  * Created by nickburrell on 03/03/2017.
  */
+import org.json.simple.JSONArray;
 import uk.me.jstott.jcoord.*;
 import com.opencsv.*;
 
@@ -15,7 +16,7 @@ public class TrafficDataProcess
 {
     static HashMap<String, HashMap<String, RoadData>> hashMap = new HashMap<String, HashMap<String, RoadData>>();
 
-    static JSONObject masterObj;
+    static JSONArray jsonArray;
 
     // Test var
     static int zeroCount = 0;
@@ -29,8 +30,6 @@ public class TrafficDataProcess
     {
         // Timing
         long tStart = System.currentTimeMillis();
-
-
 
         System.out.println("Reading data...");
         read();
@@ -74,14 +73,14 @@ public class TrafficDataProcess
 
         Iterator <HashMap.Entry<String, HashMap<String, RoadData>>> iterator = hashMap.entrySet().iterator();
 
-        masterObj = new JSONObject();
+        jsonArray = new JSONArray();
 
         while(iterator.hasNext())
         {
             // Get next
             HashMap.Entry<String, HashMap<String, RoadData>> next = iterator.next();
 
-            JSONObject objToAdd = new JSONObject();
+            JSONArray cpArray = new JSONArray();
 
             // Get sub hashMap Iterator
             Iterator <HashMap.Entry<String, RoadData>> subIterator = next.getValue().entrySet().iterator();
@@ -101,11 +100,10 @@ public class TrafficDataProcess
                 subObjToAdd.put("jBefore", subNext.getValue().jBefore.toString());
                 subObjToAdd.put("jAfter", subNext.getValue().jAfter.toString());
 
-
-                objToAdd.put(subNext.getKey(), subObjToAdd);
+                cpArray.add(subObjToAdd);
             }
 
-            masterObj.put(next.getKey(), objToAdd);
+            jsonArray.add(cpArray);
         }
     }
 
@@ -116,7 +114,7 @@ public class TrafficDataProcess
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("/Users/nickburrell/IdeaProjects/TrafficDataProcess/output/output.JSON"), "utf-8")))
         {
-            writer.write(masterObj.toJSONString());
+            writer.write(jsonArray.toJSONString());
 
             writer.close();
         }

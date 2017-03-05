@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="68cfebe0-a445-4edc-a177-7b15101cdcd3" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/output.JSON" afterPath="$PROJECT_DIR$/output/output.JSON" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/RoadData.java" afterPath="$PROJECT_DIR$/src/RoadData.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/TrafficDataProcess.java" afterPath="$PROJECT_DIR$/src/TrafficDataProcess.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -25,8 +24,8 @@
             <file leaf-file-name="RoadData.java" pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/src/RoadData.java">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="487">
-                    <caret line="43" column="22" lean-forward="true" selection-start-line="43" selection-start-column="22" selection-end-line="43" selection-end-column="22" />
+                  <state relative-caret-position="292">
+                    <caret line="30" column="29" lean-forward="true" selection-start-line="30" selection-start-column="29" selection-end-line="30" selection-end-column="29" />
                     <folding>
                       <element signature="n#!!doc" expanded="true" />
                     </folding>
@@ -45,15 +44,15 @@
       <file leaf-file-name="TrafficDataProcess.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/TrafficDataProcess.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="244">
-              <caret line="164" column="51" lean-forward="true" selection-start-line="164" selection-start-column="51" selection-end-line="164" selection-end-column="51" />
+            <state relative-caret-position="551">
+              <caret line="105" column="33" lean-forward="false" selection-start-line="105" selection-start-column="33" selection-end-line="105" selection-end-column="33" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="imports" expanded="true" />
-                <element signature="e#378#413#0" expanded="true" />
-                <element signature="e#546#547#0" expanded="true" />
-                <element signature="e#567#568#0" expanded="true" />
-                <element signature="e#6206#6224#0" expanded="true" />
+                <element signature="e#412#447#0" expanded="true" />
+                <element signature="e#579#580#0" expanded="true" />
+                <element signature="e#600#601#0" expanded="true" />
+                <element signature="e#6197#6215#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -62,8 +61,8 @@
       <file leaf-file-name="Test.java" pinned="false" current-in-tab="false">
         <entry file="jar://$USER_HOME$/Downloads/jcoord-1.0.jar!/uk/me/jstott/jcoord/Test.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="675">
-              <caret line="60" column="10" lean-forward="false" selection-start-line="60" selection-start-column="4" selection-end-line="60" selection-end-column="10" />
+            <state relative-caret-position="15">
+              <caret line="10" column="25" lean-forward="true" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -82,6 +81,7 @@
     <findStrings>
       <find>m60</find>
       <find>average</find>
+      <find>objToAdd</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -462,33 +462,33 @@
   <component name="editorHistoryManager">
     <entry file="jar://$USER_HOME$/Downloads/jcoord-1.0.jar!/uk/me/jstott/jcoord/Test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="60" column="10" lean-forward="false" selection-start-line="60" selection-start-column="4" selection-end-line="60" selection-end-column="10" />
+        <state relative-caret-position="15">
+          <caret line="10" column="25" lean-forward="true" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/RoadData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="487">
-          <caret line="43" column="22" lean-forward="true" selection-start-line="43" selection-start-column="22" selection-end-line="43" selection-end-column="22" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/TrafficDataProcess.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="244">
-          <caret line="164" column="51" lean-forward="true" selection-start-line="164" selection-start-column="51" selection-end-line="164" selection-end-column="51" />
+        <state relative-caret-position="551">
+          <caret line="105" column="33" lean-forward="false" selection-start-line="105" selection-start-column="33" selection-end-line="105" selection-end-column="33" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="e#378#413#0" expanded="true" />
-            <element signature="e#546#547#0" expanded="true" />
-            <element signature="e#567#568#0" expanded="true" />
-            <element signature="e#6206#6224#0" expanded="true" />
+            <element signature="e#412#447#0" expanded="true" />
+            <element signature="e#579#580#0" expanded="true" />
+            <element signature="e#600#601#0" expanded="true" />
+            <element signature="e#6197#6215#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/RoadData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="30" column="29" lean-forward="true" selection-start-line="30" selection-start-column="29" selection-end-line="30" selection-end-column="29" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
