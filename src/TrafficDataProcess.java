@@ -21,6 +21,9 @@ public class TrafficDataProcess
     // Test var
     static int zeroCount = 0;
 
+    final static int MAX_DISTANCE = 500;
+    final static int MIN_DISTANCE = 5;
+
     public static void main(String args[])
     {
         run();
@@ -69,6 +72,8 @@ public class TrafficDataProcess
 
     private static void generateJSON()
     {
+        boolean skip = false;
+
         // Foreach entry in the primary HashMap
 
         Iterator <HashMap.Entry<String, HashMap<String, RoadData>>> iterator = hashMap.entrySet().iterator();
@@ -92,6 +97,12 @@ public class TrafficDataProcess
 
                 JSONObject subObjToAdd = new JSONObject();
 
+                if (subNext.getValue().average < 50)
+                {
+                    skip = true;
+                    continue;
+                }
+
                 subObjToAdd.put("total", subNext.getValue().total);
                 subObjToAdd.put("count", subNext.getValue().count);
                 subObjToAdd.put("average", subNext.getValue().average);
@@ -101,6 +112,12 @@ public class TrafficDataProcess
                 subObjToAdd.put("jAfter", subNext.getValue().jAfter.toString());
 
                 cpArray.add(subObjToAdd);
+            }
+
+            if (skip)
+            {
+                skip = false;
+                continue;
             }
 
             jsonArray.add(cpArray);
@@ -168,9 +185,17 @@ public class TrafficDataProcess
 
                 LatLng jAfter = new OSRef(Double.parseDouble(nextLine[11]), Double.parseDouble(nextLine[12])).toLatLng();
 
+                // Get Distance between points
+                double distance = jBefore.distance(jAfter);
+
+
+
                 int hour = Integer.parseInt(nextLine[17]);
 
                 int count = Integer.parseInt(nextLine[30]);
+
+                if (distance > MAX_DISTANCE || (distance < MIN_DISTANCE && count < 600))
+                    continue;
 
                 // Temp string
                 String beforeAfter = jBefore.toString() + jAfter.toString();
